@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bookstore-app
+  name: my-svc-bookstore
+  namespace: ns-app
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 30004 # The port on the node to expose the service on. match with extraPortMappings containerPort if in kind config
+      port: 80 # The port the service is exposed on. can be any port, but 80 is standard for HTTP
+      targetPort: 8080 # The port your application is listening on. match with containerPort in deployment.yaml and docker webserver exposed port
+  selector:
+    app: bookstore-app

@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bookstore-app
+  name: my-deploy-bookstore
+  namespace: ns-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookstore-app
+  template:
+    metadata:
+      labels:
+        app: bookstore-app
+    spec:
+      containers:
+        - name: bookstore-app
+          image: mskr7/mkadir-bookstoreapp:latest
+          resources:
+            limits:
+              memory: 300Mi
+              cpu: "0.5"
+            requests:
+              memory: 256Mi
+              cpu: "0.3"
+          ports:
+            - containerPort: 8080 # The port your application is listening on. match with targetPort in service.yaml and docker webserver exposed port
